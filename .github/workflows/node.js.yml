@@ -37,7 +37,3 @@ jobs:
             # Run unit tests
             - name: Run unit tests
               run: npm test
-
-            # Cleanup (optional)
-            - name: Cleanup
-              run: npm run cleanup # Add any cleanup commands if needed
