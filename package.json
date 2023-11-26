@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node dist/app.js",
         "build": "tsc",
-        "prisma:generate": "prisma generate",
+        "prisma:generate": "npx prisma generate",
+        "prisma:migrate": "npx prisma migrate dev --name init",
         "dev": "ts-node src/app.ts",
         "test": "NODE_ENV=test mocha"
     },
