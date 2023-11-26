@@ -7,16 +7,33 @@
         "start": "node dist/app.js",
         "build": "tsc",
         "prisma:generate": "prisma generate",
-        "dev": "ts-node src/app.ts"
+        "dev": "ts-node src/app.ts",
+        "test": "NODE_ENV=test mocha"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/chai": "^4.3.11",
+        "@types/mocha": "^10.0.6",
+        "chai": "^4.3.10",
+        "mocha": "^10.2.0",
         "prisma": "^5.6.0",
         "typescript": "^5.3.2"
     },
     "dependencies": {
         "@prisma/client": "^5.6.0"
+    },
+    "mocha": {
+        "require": "ts-node/register",
+        "extension": [
+            "ts"
+        ],
+        "spec": "tests/**/*.test.ts",
+        "watch-files": [
+            "src/**/*.ts",
+            "tests/**/*.ts"
+        ],
+        "recursive": true
     }
 }
