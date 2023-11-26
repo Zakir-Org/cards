@@ -33,7 +33,6 @@ jobs:
             - name: Create and seed the database
               run: |
                   npx prisma migrate dev
-                  npx prisma db seed
 
             # Run unit tests
             - name: Run unit tests
