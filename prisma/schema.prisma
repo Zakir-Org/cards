@@ -1,0 +1,42 @@
+// Data source configuration for SQLite
+datasource db {
+  provider = "sqlite"
+  url      =  env("DATABASE_URL")
+}
+
+// Generator for Prisma Client
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Model definitions
+model Card {
+  id             Int       @id @default(autoincrement())
+  bankOfCard     String
+  cardName       String
+  cardType       String    
+  interestYearly Float
+  cashback       Cashback? @relation(fields: [cashbackId], references: [id])
+  cashbackId     Int?      @unique // made unique
+  limits         Limits?   @relation(fields: [limitsId], references: [id])
+  limitsId       Int?      @unique // made unique
+}
+
+model Cashback {
+  id      Int    @id @default(autoincrement())
+  fuel    Float
+  store   Float
+  grocers Float
+  other   Float
+  card    Card?
+}
+
+model Limits {
+  id           Int    @id @default(autoincrement())
+  card2Card    Float
+  interestCalc Float
+  maxAmount    Float
+  withdraw     Float
+  card         Card?
+}
+
