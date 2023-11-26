@@ -12,7 +12,10 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [20.9.0] # Use your Node.js version here
+                node-version: [20.9.0]
+
+        env:
+            DATABASE_URL: file:./dev-test.db
 
         steps:
             - name: Checkout code
