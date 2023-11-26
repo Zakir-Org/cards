@@ -12,14 +12,30 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [20.9.0]
+                node-version: [20.9.0] # Use your Node.js version here
 
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout code
+              uses: actions/checkout@v2
+
             - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: npm ci
-            - run: npm run build --if-present
-            - run: npm test
+
+            - name: Install dependencies
+              run: npm ci
+
+            # Create and seed the database using Prisma
+            - name: Create and seed the database
+              run: |
+                  npx prisma migrate dev
+                  npx prisma db seed
+
+            # Run unit tests
+            - name: Run unit tests
+              run: npm test
+
+            # Cleanup (optional)
+            - name: Cleanup
+              run: npm run cleanup # Add any cleanup commands if needed
