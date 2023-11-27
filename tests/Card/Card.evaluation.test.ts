@@ -41,13 +41,12 @@ describe('Card', () => {
             const cashback = { fuel: 3, grocers: 1, store: 3, other: 0 } as Cashback;
             const body = { fuel: 100, store: 50, grocers: 200, other: 50 } as CardCashbackInfo;
 
-            const prismaStub = stubInterface<PrismaClient>();
-            const cardEvaluation = new CardEvaluation(card, prismaStub);
-            sandbox.stub(cardEvaluation, 'loadCashbackData').resolves(cashback);
+            const cardEvaluation = new CardEvaluation();
+
             sandbox.stub(CardEvaluation, 'calculateCategoryIncome').returns(10);
 
             // Act
-            const result = await cardEvaluation.calculateTotalCashback(body);
+            const result = await cardEvaluation.calculateTotalCashback(body, cashback);
 
             // Assert
             expect(result).to.be.eqls(40);
@@ -60,11 +59,10 @@ describe('Card', () => {
             const card = { interestYearly: 5 } as Card;
             const body = { accountBalance: 1200 } as CardInterestIncomeInfo;
 
-            const prismaStub = stubInterface<PrismaClient>();
-            const cardEvaluation = new CardEvaluation(card, prismaStub);
+            const cardEvaluation = new CardEvaluation();
 
             // Act
-            const result = await cardEvaluation.calculateTotalInterestIncome(body);
+            const result = await cardEvaluation.calculateTotalInterestIncome(body, card);
 
             // Assert
             expect(result).to.be.eqls(5);
