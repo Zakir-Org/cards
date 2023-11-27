@@ -1,4 +1,4 @@
-import { Card } from '@prisma/client';
+import { Card, Cashback } from '@prisma/client';
 
 export interface CardCashbackInfo {
     fuel: number;
@@ -15,6 +15,7 @@ export interface CardInterestIncomeInfo {
 export interface CardSingleRecommend extends Card {
     interestRateIncome?: number;
     cashbackIncome?: number;
+    cashback?: Cashback;
     totalIncome: number;
 }
 

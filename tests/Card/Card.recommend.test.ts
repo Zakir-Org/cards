@@ -5,7 +5,8 @@ import { ICardEvaluation } from '../../src/Card/Card.evaluation';
 import { CardRequestBody, CardSingleRecommend } from '../../src/Card/Card.types';
 import { expect } from 'chai';
 import { createSandbox } from 'sinon';
-describe.only('CardRecommend', () => {
+
+describe('CardRecommend', () => {
     const sandbox = createSandbox();
 
     afterEach(() => {
@@ -16,14 +17,16 @@ describe.only('CardRecommend', () => {
         it('should recommend best card successfully', async () => {
             // Arrange
             const prisma = new PrismaClient();
+
             const stubEvaluation = stubInterface<ICardEvaluation>();
 
             const mockCards = [
                 { id: 1, interestYearly: 5, cashback: { id: 1, fuel: 3, grocers: 1 } as Cashback } as unknown as Card,
                 { id: 2, interestYearly: 5.5, cashback: { id: 2, fuel: 4, grocers: 2 } as Cashback } as unknown as Card,
-                { id: 2, interestYearly: 3, cashback: { id: 2, fuel: 2, grocers: 2 } as Cashback } as unknown as Card,
+                { id: 3, interestYearly: 3, cashback: { id: 2, fuel: 2, grocers: 2 } as Cashback } as unknown as Card,
             ];
-            sandbox.stub(prisma.card, 'findMany').resolves(mockCards);
+
+            prisma.card.findMany = sandbox.stub().resolves(mockCards);
 
             const body = {
                 detailForCashback: { fuel: 100, grocers: 50 },
@@ -43,7 +46,14 @@ describe.only('CardRecommend', () => {
             const result = await cardRecommend.recommendSingleCard(body);
 
             // Assert
-            expect(result).to.be.eqls({} as CardSingleRecommend);
+            expect(result).to.be.eqls({
+                id: 2,
+                interestYearly: 5.5,
+                cashback: { id: 2, fuel: 4, grocers: 2 },
+                interestRateIncome: 150,
+                cashbackIncome: 15,
+                totalIncome: 165,
+            } as CardSingleRecommend);
         });
     });
 });
