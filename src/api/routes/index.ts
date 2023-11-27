@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import { CardController } from '../controllers/CardController';
+
+const cardController = new CardController();
 
 const router = Router();
 
@@ -6,5 +9,7 @@ const router = Router();
 router.get('/', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
+
+router.get('/recommendSingleCard', cardController.recommendSingleCard);
 
 export default router;
