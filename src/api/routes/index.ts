@@ -10,6 +10,6 @@ router.get('/', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
 
-router.get('/recommendSingleCard', cardController.recommendSingleCard);
+router.post('/recommendSingleCard', cardController.recommendSingleCard);
 
 export default router;
