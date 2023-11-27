@@ -5,7 +5,7 @@ export interface CardCashbackInfo {
     other: number;
 }
 
-export interface InterestIncomeDetails {
+export interface CardInterestIncomeInfo {
     accountBalance: number;
     // Add more fields if needed
 }

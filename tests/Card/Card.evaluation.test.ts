@@ -3,9 +3,9 @@ import { CardEvaluation } from '../../src/Card/Card.evaluation';
 import sinon from 'sinon';
 import { stubInterface } from 'ts-sinon';
 import { expect } from 'chai';
-import { CardCashbackInfo } from '../../src/Card/Card.types';
+import { CardCashbackInfo, CardInterestIncomeInfo } from '../../src/Card/Card.types';
 
-describe.only('Card', () => {
+describe('Card', () => {
     const sandbox = sinon.createSandbox();
 
     afterEach(() => {
@@ -51,6 +51,23 @@ describe.only('Card', () => {
 
             // Assert
             expect(result).to.be.eqls(40);
+        });
+    });
+
+    describe('calculateTotalInterestIncome', () => {
+        it('should calculate total income from yearly interest rate', async () => {
+            // Arrange
+            const card = { interestYearly: 5 } as Card;
+            const body = { accountBalance: 1200 } as CardInterestIncomeInfo;
+
+            const prismaStub = stubInterface<PrismaClient>();
+            const cardEvaluation = new CardEvaluation(card, prismaStub);
+
+            // Act
+            const result = await cardEvaluation.calculateTotalInterestIncome(body);
+
+            // Assert
+            expect(result).to.be.eqls(5);
         });
     });
 });

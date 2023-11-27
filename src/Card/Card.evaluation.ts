@@ -1,9 +1,9 @@
 import { Card, Cashback, PrismaClient } from '@prisma/client';
-import { CardCashbackInfo, InterestIncomeDetails } from './Card.types';
+import { CardCashbackInfo, CardInterestIncomeInfo } from './Card.types';
 
 export interface ICardEvaluation {
     calculateTotalCashback(body: CardCashbackInfo): Promise<number>;
-    // calculateTotalInterestIncome(body: InterestIncomeDetails): Promise<number>;
+    calculateTotalInterestIncome(body: CardInterestIncomeInfo): number;
 }
 
 export class CardEvaluation implements ICardEvaluation {
@@ -39,5 +39,15 @@ export class CardEvaluation implements ICardEvaluation {
         return ((categoryRate ?? 0) * (categorySpending ?? 0)) / 100;
     }
 
-    // public async calculateTotalInterestIncome(body: InterestIncomeDetails): Promise<number> {}
+    public calculateTotalInterestIncome(body: CardInterestIncomeInfo): number {
+        try {
+            const yearlyInterestIncome = ((body?.accountBalance || 0) * (this.card.interestYearly || 0)) / 100;
+            const monthlyInterestIncome = (yearlyInterestIncome / 12).toFixed(2);
+
+            return parseFloat(monthlyInterestIncome);
+        } catch (error) {
+            console.error('CardEvaluation calculateTotalInterestIncome error', { error });
+            return 0;
+        }
+    }
 }
