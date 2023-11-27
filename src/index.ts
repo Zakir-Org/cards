@@ -1,10 +1,17 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import apiRoutes from './api/routes';
+import YAML from 'yamljs';
 
 const app = express();
 
-// Other middleware (body-parser, cors, etc)
-// ...
+// Load Swagger YAML file
+const swaggerDocument = YAML.load('./src/api/docs/recommendSingleCard.yaml');
+
+app.use(express.json());
+
+// Serve swagger docs the way you like (Recommendation: swagger-tools)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Use the API routes
 app.use('/api', apiRoutes);

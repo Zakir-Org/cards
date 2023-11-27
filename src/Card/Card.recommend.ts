@@ -22,8 +22,8 @@ export class CardRecommend implements ICardRecommend {
             const cardsWithIncome = cards.map((card) => {
                 const cashbackIncome = this.evaluation.calculateTotalCashback(body.detailForCashback, card?.cashback as Cashback);
                 const interestRateIncome = this.evaluation.calculateTotalInterestIncome(body.detailForInterest, card);
-
-                return { ...card, cashbackIncome, interestRateIncome, totalIncome: cashbackIncome + interestRateIncome };
+                const totalIncome = parseFloat((cashbackIncome + interestRateIncome).toFixed(2));
+                return { ...card, cashbackIncome, interestRateIncome, totalIncome };
             });
 
             // Find the card with the highest total income

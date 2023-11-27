@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+    title: Card Recommendation API
+    version: '1.0.0'
+    description: API for recommending cards based on user input.
+paths:
+    /api/recommendSingleCard:
+        post:
+            summary: Recommend a single card
+            description: Receives user data to recommend a single card.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - detailForCashback
+                                - detailForInterest
+                            properties:
+                                detailForCashback:
+                                    type: object
+                                    description: Cashback details for card recommendation.
+                                    required:
+                                        - fuel
+                                        - store
+                                        - grocers
+                                        - other
+                                    properties:
+                                        fuel:
+                                            type: number
+                                            description: Cashback percentage for fuel.
+                                        store:
+                                            type: number
+                                            description: Cashback percentage for store purchases.
+                                        grocers:
+                                            type: number
+                                            description: Cashback percentage for grocery purchases.
+                                        other:
+                                            type: number
+                                            description: Cashback percentage for other purchases.
+                                detailForInterest:
+                                    type: object
+                                    description: Interest income details for card recommendation.
+                                    required:
+                                        - accountBalance
+                                    properties:
+                                        accountBalance:
+                                            type: number
+                                            description: The account balance.
+                                        # Add more fields if needed
+            responses:
+                '200':
+                    description: Successfully retrieved card recommendation.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    recommendedCard:
+                                        type: object
+                                        description: Card data that is being recommended.
+                '500':
+                    description: Server error occurred while recommending card.

@@ -131,3 +131,4 @@ dist
 
 prisma/dev.db
 prisma/test-dev.db
+prisma/dev-test.db
