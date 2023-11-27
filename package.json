@@ -6,10 +6,11 @@
     "scripts": {
         "start": "tsc && node dist/index.js",
         "build": "tsc",
-        "prisma:generate": "npx prisma generate",
-        "prisma:migrate": "npx prisma migrate dev --name init",
         "dev": "ts-node src/index.ts",
-        "test": "mocha --require ts-node/register --require ./test-setup.ts"
+        "test": "mocha --require ts-node/register --require ./test-setup.ts",
+        "prisma: generate": "npx prisma generate",
+        "prisma: migrate": "npx prisma migrate dev --name init",
+        "prisma: seed": "node prisma/seed.js"
     },
     "keywords": [],
     "author": "",
