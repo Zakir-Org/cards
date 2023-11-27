@@ -6,7 +6,7 @@
     "scripts": {
         "start": "tsc && node dist/index.js",
         "build": "tsc",
-        "dev": "ts-node src/index.ts",
+        "dev": "ts-node -r ./dev-setup.ts src/index.ts",
         "test": "mocha --require ts-node/register --require ./test-setup.ts",
         "prisma: generate": "npx prisma generate",
         "prisma: migrate": "npx prisma migrate dev --name init",
