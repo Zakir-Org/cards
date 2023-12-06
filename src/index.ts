@@ -2,6 +2,7 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import apiRoutes from './api/routes';
 import YAML from 'yamljs';
+import cors from 'cors';
 
 const app = express();
 
@@ -9,6 +10,9 @@ const app = express();
 const swaggerDocument = YAML.load('./src/api/docs/recommendSingleCard.yaml');
 
 app.use(express.json());
+
+// Enable All CORS Requests
+app.use(cors());
 
 // Serve swagger docs the way you like (Recommendation: swagger-tools)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
